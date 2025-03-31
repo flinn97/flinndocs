@@ -1,126 +1,94 @@
-import {BaseClass} from "flinntest-react-library";
+import { BaseClass } from "flinntech";
 
-/**
- * This is just an example of objects that are created per client
- */
-class ComponentBase extends BaseClass{
-    constructor(opps){
-        super(opps)
+class ComponentBase extends BaseClass {
+    constructor(opps) {
+        super(opps);
+    }
+    json = {
+        ...this.json,
+        type: "",
+        name: "",
+        owner: "",
+        picURL: "",
+    };
+}
+
+class User extends ComponentBase {
+    json = {
+        ...this.json,
+        type: 'user',
+    };
+}
+
+class Contact extends ComponentBase {
+    json = {
+        ...this.json,
+        type: 'contact',
+        phone: "",
+        email: "",
+        conversationIds: [],
         
-    }
-    json={...this.json,
-        type:"",
-        name:"",
-        owner:"",
-        picURL:"",
-
-        }
+    };
 }
-class User extends ComponentBase{
-    json ={
+
+class Conversations extends ComponentBase {
+    json = {
         ...this.json,
-        type:'user',
-    }
+        type: 'conversation',
+        contactIds: [],
+    };
 }
-/**
- * user could be something that is in every app. Shouldn't have to put it in,
- */
 
-class Topic extends ComponentBase{
-    json ={
+class Template extends ComponentBase {
+    json = {
         ...this.json,
-        type:'topic',
-        backendKeys:["subTopic", "image", "map", "pin", ]
-
-
-
-
-    }
+        type: 'template',
+        content: "",
+    };
 }
-class Task extends ComponentBase{
-    json ={
+
+class Sequence extends ComponentBase {
+    json = {
         ...this.json,
-        complete:false,
-        notes:"",
-        date: ""
-
-
-    }
+        type: 'sequence',
+        steps: [],
+    };
 }
-class ISR extends Task{
-    json ={
+
+class Step extends ComponentBase {
+    json = {
         ...this.json,
-        type:'isr',
-        text: "ISR",
-
-
-    }
+        type: 'step',
+        delay: 0,
+        messageId: ""
+    };
 }
-class Campaign extends Task{
-    json ={
+
+class BaseMessenger extends ComponentBase {
+    json = {
         ...this.json,
-        type:'campaign',
-        text: "Campaign",
-
-
-    }
+        conversationIds: [],
+        ownerMessage:false
+    };
 }
-class OEM extends ComponentBase{
-    json ={
+
+class TextMessage extends BaseMessenger {
+    json = {
         ...this.json,
-        type:'oem',
-        text: "OEM",
-        category: "",
-        quotes: "0",
-        notes:"",
-       
-
-
-    }
+        type: 'textMessage',
+        content: "",
+        timestamp: "",
+    };
 }
-class Report extends ComponentBase{
-    json ={
+
+class Email extends BaseMessenger {
+    json = {
         ...this.json,
-        type:'report',
-        emails:"",
-        sendDay: "",
-       
-
-
-    }
-}
-class Pin extends ComponentBase{
-    json={
-        ...this.json,
-        type:"pin",
-        mapId:"",
-        x:0,
-        y:0,
-        mapId:"",
-        name:"New Topic"
-    }
-}
-class SubTopic extends Topic{
-    json={
-        ...this.json,
-        type:"subTopic",
-        orderMatters:true,
-        orderFilterKey:"parentId",
-        parentId:"",
-        order:0,
-        backendKeys:["topic"],
-        backendAttributes:["topicId"],
-        backendFilterKeys:["_id"],
-        parentIds:{}
-        
-    }
+        type: 'email',
+        subject: "",
+        body: "",
+        timestamp: "",
+    };
 }
 
-class Image extends ComponentBase{
-    json={
-        ...this.json,
-        type:"image", 
-    }
-}
-
-export{Topic, SubTopic, Image, ISR,Campaign, Pin, User, OEM, Report}
+export { User, Contact, Conversations, Template, Sequence, Step, TextMessage, Email };
